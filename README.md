@@ -7,6 +7,9 @@ A Webpack plugin to watch your asset sizes.
 In your Webpack Config:
 ```javascript
 const GumshoePlugin = require('webpack-gumshoe-plugin');
+
+...
+
 plugins: [
   new GumshoePlugin({
     apiKey: 'API_KEY'

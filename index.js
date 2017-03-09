@@ -1,5 +1,6 @@
 var fetch = require('node-fetch');
 var path = require('path');
+var qs = require('qs');
 
 function GumshoePlugin(options) {
   this.options = options || {};
@@ -9,6 +10,7 @@ GumshoePlugin.prototype.apply = function(compiler) {
   var fingerprint = this.options.fingerprint;
   var env = this.options.env;
   var apiKey = this.options.apiKey;
+  var name = this.options.name;
   var files = {};
 
   compiler.plugin('emit', function(compilation, callback) {
@@ -16,8 +18,8 @@ GumshoePlugin.prototype.apply = function(compiler) {
       var file = compilation.assets[filename];
 
       if (fingerprint) {
-        let parts = path.parse(filename);
-        let newname = parts.name.replace(fingerprint, '');
+        var parts = path.parse(filename);
+        var newname = parts.name.replace(fingerprint, '');
         filename = path.join(parts.dir, newname + parts.ext);
       }
 
@@ -25,8 +27,14 @@ GumshoePlugin.prototype.apply = function(compiler) {
     });
 
     var env = env || process.env['NODE_ENV'] || 'development';
-    fetch('https://api.gumshoebot.com/v1/files?env='+encodeURIComponent(env)+'&api_key='+encodeURIComponent(apiKey), {
+    fetch('https://api.gumshoebot.com/v1/files?'+qs.stringify({
+      env: env,
+      name: name,
+    }), {
       method: 'POST',
+      headers: {
+        'Authorization': apiKey,
+      },
       body: JSON.stringify(files),
     })
     .then(() => callback())

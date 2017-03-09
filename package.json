@@ -1,6 +1,6 @@
 {
   "name": "webpack-gumshoe-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/civilco/webpack-gumshoe-plugin#readme",
   "dependencies": {
-    "node-fetch": "^1.6.3"
+    "node-fetch": "^1.6.3",
+    "qs": "^6.4.0"
   }
 }
