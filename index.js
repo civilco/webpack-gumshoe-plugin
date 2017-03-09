@@ -26,9 +26,8 @@ GumshoePlugin.prototype.apply = function(compiler) {
       files[filename] = file.size();
     });
 
-    var env = env || process.env['NODE_ENV'] || 'development';
     fetch('https://api.gumshoebot.com/v1/files?'+qs.stringify({
-      env: env,
+      env: env || process.env['NODE_ENV'] || 'development',
       name: name,
     }), {
       method: 'POST',
